@@ -13,5 +13,17 @@ desktop-file-query [QUERY]
 # Example
 ```
 $ desktop-file-query "zen browser"
-/run/current-system/sw/share/applications/zen.desktop
+/run/current-system/sw/share/applications/chromium-browser.desktop
+/run/current-system/sw/share/applications/gtk3-icon-browser.desktop
+/run/current-system/sw/share/applications/nixos-manual.desktop
+/run/current-system/sw/share/applications/org.gnome.BrowserConnector.desktop
+/run/current-system/sw/share/applications/org.gnome.Epiphany.desktop
+/run/current-system/sw/share/applications/zen.desktop```
+```
+
+# Running as a nix flake
+If you have Nix installed and flakes enabled, this package can be
+downloaded, built and run effortlessly with one command:
+```
+nix run github:jorikvanveen/desktop-file-query -- "browser"
 ```
