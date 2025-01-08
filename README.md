@@ -12,7 +12,7 @@ desktop-file-query [QUERY]
 
 # Example
 ```
-$ desktop-file-query "zen browser"
+$ desktop-file-query "browser"
 /run/current-system/sw/share/applications/chromium-browser.desktop
 /run/current-system/sw/share/applications/gtk3-icon-browser.desktop
 /run/current-system/sw/share/applications/nixos-manual.desktop
