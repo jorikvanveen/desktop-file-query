@@ -24,9 +24,7 @@ fn main() -> color_eyre::Result<()> {
     color_eyre::install()?;
     let args = Args::parse();
 
-    //println!("Searching desktop files for: {}", args.query);
-
-    let dirs: Vec<PathBuf> = std::env::var("XDG_DATA_DIRS")
+    let mut dirs: Vec<PathBuf> = std::env::var("XDG_DATA_DIRS")
         .wrap_err("No XDG_DATA_DIRS environment variable defined, cannot continue.")?
         .split(":")
         .map(PathBuf::from)
@@ -34,8 +32,20 @@ fn main() -> color_eyre::Result<()> {
         .filter(|path| fs::exists(path).unwrap_or(false))
         .collect();
 
-    //println!("Searching the following directories for desktop files:");
-    //println!("{:#?}", &dirs);
+    match std::env::var("HOME") {
+        Ok(home_dir) => {
+            let data_home = match std::env::var("XDG_DATA_HOME") {
+                Ok(data_home) => PathBuf::from(data_home),
+                _ => PathBuf::from(home_dir).join(".local").join("share"),
+            };
+            let local_share_apps = data_home.join("applications");
+
+            if local_share_apps.exists() {
+                dirs.push(local_share_apps);
+            }
+        },
+        _ => {},
+    }
 
     let matched_files: Vec<(PathBuf, String)> = dirs
         .iter()
